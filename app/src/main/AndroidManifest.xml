@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="dell.example.com.cleanmaster">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +31,53 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".uis.activity.PowerSavingComplition"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".uis.activity.UltraPopup"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".uis.activity.BatterySaverBlack"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".uis.activity.NomalMode"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".uis.activity.ApplyingUltra"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".uis.activity.ScaningJunk"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".uis.activity.CpuScaner"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".uis.activity.PickApps"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent" />
+
+        <!--receiver-->
+        <receiver android:name=".service.AlaramJunk" />
+        <receiver android:name=".service.AlaramBooster" />
+
+        <receiver android:name=".service.AppListener">
+            <intent-filter android:priority="100">
+                <action android:name="android.intent.action.PACKAGE_INSTALL" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".service.PowerConnected">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+            </intent-filter>
+        </receiver>
+
     </application>
+
 
 </manifest>

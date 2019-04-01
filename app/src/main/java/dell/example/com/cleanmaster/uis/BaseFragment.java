@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.io.Console;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -21,6 +24,7 @@ public abstract class BaseFragment extends Fragment {
         view_home = inflater.inflate(layout, container, false);
         injectView();
         injectVariables();
+        Log.e("AAA", "" +layout);
         return view_home;
     }
 

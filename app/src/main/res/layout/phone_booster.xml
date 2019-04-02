@@ -80,7 +80,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textAppearance="?android:textAppearanceLarge"
-                    android:textColor="#F22938"
+                    android:textColor="#FFF"
                     android:textSize="@dimen/_24sdp" />
 
                 <TextView

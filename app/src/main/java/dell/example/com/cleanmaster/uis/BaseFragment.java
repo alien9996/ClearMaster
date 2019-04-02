@@ -24,7 +24,6 @@ public abstract class BaseFragment extends Fragment {
         view_home = inflater.inflate(layout, container, false);
         injectView();
         injectVariables();
-        Log.e("AAA", "" +layout);
         return view_home;
     }
 

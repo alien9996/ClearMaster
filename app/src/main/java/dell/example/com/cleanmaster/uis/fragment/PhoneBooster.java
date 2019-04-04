@@ -29,8 +29,11 @@ import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 
 import java.io.RandomAccessFile;
+import java.math.RoundingMode;
 import java.sql.Time;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,6 +44,7 @@ import dell.example.com.cleanmaster.R;
 import dell.example.com.cleanmaster.service.AlaramBooster;
 import dell.example.com.cleanmaster.uis.BaseFragment;
 import dell.example.com.cleanmaster.uis.activity.MainActivity;
+import dell.example.com.cleanmaster.uis.activity.NomalMode;
 
 public class PhoneBooster extends BaseFragment {
 
@@ -54,6 +58,8 @@ public class PhoneBooster extends BaseFragment {
     TimerTask timer2 = null;
     int counter = 0;
     int x, y;
+    int used_memory_size = 0;
+    String total_ram = "";
     SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
     InterstitialAd mInterstitialAd;
@@ -65,6 +71,9 @@ public class PhoneBooster extends BaseFragment {
 
     @Override
     protected void injectView() {
+
+        used_memory_size = (int) getUsedMemorySize();
+        total_ram = getTotalRam();
 
         // DecoView
         arcView = view_home.findViewById(R.id.dynamicArcView2);
@@ -98,7 +107,7 @@ public class PhoneBooster extends BaseFragment {
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
-                //   mInterstitialAd.show(); // show google ad
+                mInterstitialAd.show(); // show google ad
             }
         });
         mInterstitialAd.loadAd(adRequestInter);
@@ -112,8 +121,16 @@ public class PhoneBooster extends BaseFragment {
 //            ramperct.setText(ran3.nextInt(60) + 40 + "%");
 
             DecimalFormat fm = new DecimalFormat("##");
-            Float totalram = Float.parseFloat(getTotalRam().substring(0, 3));
-            double ram1 = 100 * (getUsedMemorySize() / 1024.0) / totalram;
+            Float totalram = Float.parseFloat(total_ram.substring(0,3));
+            double ram1 = 1 + 100 * (used_memory_size / 1024.0) / totalram;
+            if (ram1 < 60) {
+                ram1 = ram1 + 10;
+                used_memory_size = (int)(used_memory_size + totalram * 0.1);
+            } else {
+                ram1 = ram1 + 5;
+                used_memory_size = (int)(used_memory_size + totalram * 0.05);
+            }
+
             String ram_str = fm.format(ram1);
             ramperct.setText(ram_str + "%");
 
@@ -170,7 +187,7 @@ public class PhoneBooster extends BaseFragment {
 
 
         } catch (Exception ex) {
-            Log.e("LOI ", "" + ex);
+            Log.e("MAIN ", "" + ex);
         }
 
     }
@@ -214,10 +231,10 @@ public class PhoneBooster extends BaseFragment {
         );
 
         // Create data series track
-//        SeriesItem seriesItem1 = new SeriesItem.Builder(Color.parseColor("#F22938"))
-//                .setRange(0, 100, 0)
-//                .setLineWidth(32f)
-//                .build();
+        SeriesItem seriesItem1 = new SeriesItem.Builder(Color.parseColor("#F22938"))
+                .setRange(0, 100, 0)
+                .setLineWidth(32f)
+                .build();
 
         SeriesItem seriesItem2 = new SeriesItem.Builder(Color.parseColor("#2499E0"))
                 .setRange(0, 100, 0)
@@ -246,7 +263,7 @@ public class PhoneBooster extends BaseFragment {
                         timer.cancel();
                         t.purge();
 
-                        centree.setText(getUsedMemorySize() + " MB");
+                        centree.setText(used_memory_size + " MB");
 
 
                         if (sharedpreferences.getString("booster", "1").equals("0")) {
@@ -287,16 +304,14 @@ public class PhoneBooster extends BaseFragment {
 //                            Log.e("T2 ERR", "" + ex);
 //                        }
 
-
-
                     }
                 }).build());
 
 
-        totalram.setText(getTotalRam());
-        usedram.setText(getUsedMemorySize() + " MB/ ");
-        appsfreed.setText(getTotalRam());
-        appsused.setText(getUsedMemorySize() - x - 33 + " MB/ ");
+        totalram.setText(total_ram);
+        usedram.setText(used_memory_size + " MB/ ");
+        appsfreed.setText(total_ram);
+        appsused.setText(used_memory_size - x - 33 + " MB/ ");
 
         Random ran = new Random();
         y = ran.nextInt(50) + 15;
@@ -307,136 +322,139 @@ public class PhoneBooster extends BaseFragment {
 
     // method optimize
     public void optimize() {
+        try {
 
-        Random ran = new Random();
-        x = ran.nextInt(100) + 30;
+            Random ran = new Random();
+            x = ran.nextInt(100) + 30;
 
-        final long memory_size = getUsedMemorySize() - x;
+            final int memory_size = used_memory_size - x;
 
-        DecimalFormat fm = new DecimalFormat("##");
-        Float totalram1 = Float.parseFloat(getTotalRam().substring(0, 3));
-        double percen = 100 * (memory_size / 1024.0) / totalram1;
-        final String ram_str = fm.format(percen);
-
-
-
-        RotateAnimation rotate = new RotateAnimation(0, 359, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotate.setDuration(5000);
-        rotate.setInterpolator(new LinearInterpolator());
-
-        ImageView image = view_home.findViewById(R.id.circulalines);
-
-        image.startAnimation(rotate);
-
-        arcView.addSeries(new SeriesItem.Builder(Color.argb(255, 218, 218, 218))
-                .setRange(0, 100, 0)
-                .setInterpolator(new AccelerateInterpolator())
-                .build());
-
-        arcView.addSeries(new SeriesItem.Builder(Color.parseColor("#F22938"))
-                .setRange(0, 100, 100)
-                .setInitialVisibility(false)
-                .setLineWidth(32f)
-                .build());
+            DecimalFormat fm = new DecimalFormat("##");
+            Float totalram1 = Float.parseFloat(total_ram.substring(0,3));
+            double percen = 1 + 100 * (memory_size / 1024.0) / totalram1;
+            final String ram_str = fm.format(percen);
 
 
-        // create data series track
-        SeriesItem seriesItem2 = new SeriesItem.Builder(Color.parseColor("#2499E0"))
-                .setRange(0, 100, 0)
-                .setLineWidth(32f)
-                .build();
+            RotateAnimation rotate = new RotateAnimation(0, 359, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            rotate.setDuration(5000);
+            rotate.setInterpolator(new LinearInterpolator());
 
-        int series1Index2 = arcView.addSeries(seriesItem2);
+            ImageView image = view_home.findViewById(R.id.circulalines);
 
-        arcView.addEvent(new DecoEvent.Builder(DecoEvent.EventType.EVENT_SHOW, true)
-                .setDelay(500)
-                .setDuration(2000)
-                .setListener(new DecoEvent.ExecuteEventListener() {
-                    @Override
-                    public void onEventStart(DecoEvent decoEvent) {
-                        bottom.setText("");
-                        top.setText("");
-                        centree.setText("Optimizing...");
-                    }
+            image.startAnimation(rotate);
 
-                    @Override
-                    public void onEventEnd(DecoEvent decoEvent) {
+            arcView.addSeries(new SeriesItem.Builder(Color.argb(255, 218, 218, 218))
+                    .setRange(0, 100, 0)
+                    .setInterpolator(new AccelerateInterpolator())
+                    .build());
 
-                    }
-                }).build());
+            arcView.addSeries(new SeriesItem.Builder(Color.parseColor("#F22938"))
+                    .setRange(0, 100, 100)
+                    .setInitialVisibility(false)
+                    .setLineWidth(32f)
+                    .build());
 
-        arcView.addEvent(new DecoEvent.Builder(Integer.parseInt(ram_str)).setIndex(series1Index2).setDelay(4000).setListener(new DecoEvent.ExecuteEventListener() {
-            @Override
-            public void onEventStart(DecoEvent decoEvent) {
-                bottom.setText("");
-                top.setText("");
-                centree.setText("Optimizing...");
-            }
 
-            @Override
-            public void onEventEnd(DecoEvent decoEvent) {
-                mInterstitialAd.show();
-                bottom.setText("Found");
-                top.setText("Storage");
+            // create data series track
+            SeriesItem seriesItem2 = new SeriesItem.Builder(Color.parseColor("#2499E0"))
+                    .setRange(0, 100, 0)
+                    .setLineWidth(32f)
+                    .build();
+
+            int series1Index2 = arcView.addSeries(seriesItem2);
+
+            arcView.addEvent(new DecoEvent.Builder(DecoEvent.EventType.EVENT_SHOW, true)
+                    .setDelay(500)
+                    .setDuration(2000)
+                    .setListener(new DecoEvent.ExecuteEventListener() {
+                        @Override
+                        public void onEventStart(DecoEvent decoEvent) {
+                            bottom.setText("");
+                            top.setText("");
+                            centree.setText("Optimizing...");
+                        }
+
+                        @Override
+                        public void onEventEnd(DecoEvent decoEvent) {
+
+                        }
+                    }).build());
+
+            arcView.addEvent(new DecoEvent.Builder(Integer.parseInt(ram_str)).setIndex(series1Index2).setDelay(4000).setListener(new DecoEvent.ExecuteEventListener() {
+                @Override
+                public void onEventStart(DecoEvent decoEvent) {
+                    bottom.setText("");
+                    top.setText("");
+                    centree.setText("Optimizing...");
+                }
+
+                @Override
+                public void onEventEnd(DecoEvent decoEvent) {
+                    mInterstitialAd.show();
+                    bottom.setText("Found");
+                    top.setText("Storage");
 
 //                Random ran3 = new Random();
 //                ramperct.setText(ran3.nextInt(40) + 20 + "%");
-                ramperct.setText(ram_str + "%");
-            }
-        }).build());
+                    ramperct.setText(ram_str + "%");
+                }
+            }).build());
 
 
-        ImageView img_animation = view_home.findViewById(R.id.waves);
+            ImageView img_animation = view_home.findViewById(R.id.waves);
 
-        TranslateAnimation animation = new TranslateAnimation(0, 1000, 0.0f, 0.0f);
-        animation.setDuration(5000);
-        animation.setRepeatCount(0);
-        animation.setInterpolator(new LinearInterpolator());
-        //        animation.setRepeatMode(2);   // repeat animation (left to right, right to left )
-        animation.setFillAfter(true);
+            TranslateAnimation animation = new TranslateAnimation(0, 1000, 0.0f, 0.0f);
+            animation.setDuration(5000);
+            animation.setRepeatCount(0);
+            animation.setInterpolator(new LinearInterpolator());
+            //        animation.setRepeatMode(2);   // repeat animation (left to right, right to left )
+            animation.setFillAfter(true);
 
-        img_animation.startAnimation(animation);
+            img_animation.startAnimation(animation);
 
-        int counter = 0;
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                scanlay.setVisibility(View.VISIBLE);
-                optimizelay.setVisibility(View.GONE);
-                scanning.setText("SCANNING...");
-            }
+            int counter = 0;
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    scanlay.setVisibility(View.VISIBLE);
+                    optimizelay.setVisibility(View.GONE);
+                    scanning.setText("SCANNING...");
+                }
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                scanlay.setVisibility(View.GONE);
-                optimizelay.setVisibility(View.VISIBLE);
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    scanlay.setVisibility(View.GONE);
+                    optimizelay.setVisibility(View.VISIBLE);
 
-                optimizebutton.setImageResource(R.drawable.optimized);
+                    optimizebutton.setImageResource(R.drawable.optimized);
 
-                Random ran2 = new Random();
-                int proc = ran2.nextInt(10) + 5;
+                    Random ran2 = new Random();
+                    int proc = ran2.nextInt(10) + 5;
 
-                centree.setText(memory_size + " MB");
+                    centree.setText(memory_size + " MB");
 
-                editor = sharedpreferences.edit();
-                editor.putString("values", memory_size + " MB");
-                editor.commit();
+                    editor = sharedpreferences.edit();
+                    editor.putString("values", memory_size + " MB");
+                    editor.commit();
 
-                totalram.setText(getTotalRam());
-                usedram.setText(memory_size + " MB/ ");
+                    totalram.setText(total_ram);
+                    usedram.setText(memory_size + " MB/ ");
 
-                appsfreed.setText(getTotalRam());
-                appsused.setText(Math.abs(memory_size + 30) + " MB/ ");
+                    appsfreed.setText(total_ram);
+                    appsused.setText(Math.abs(memory_size - 33) + " MB/ ");
 
-                processes.setText(y - proc + "");
+                    processes.setText(y - proc + "");
 
-            }
+                }
 
-            @Override
-            public void onAnimationRepeat(Animation animation) {
+                @Override
+                public void onAnimationRepeat(Animation animation) {
 
-            }
-        });
+                }
+            });
+        } catch (Exception ex) {
+            Log.e("OPTIMIZE", "" + ex);
+        }
     }
 
 
@@ -459,7 +477,10 @@ public class PhoneBooster extends BaseFragment {
 
         RandomAccessFile render = null;
         String load = null;
-        DecimalFormat twoDecimalForm = new DecimalFormat("#.##");
+        Locale locale = new Locale("en", "EN");
+        DecimalFormat twoDecimalForm = (DecimalFormat)
+                NumberFormat.getNumberInstance(locale);
+        twoDecimalForm.applyPattern("#.##");
         double totRam = 0;
         String lastValue = "";
 
@@ -516,4 +537,13 @@ public class PhoneBooster extends BaseFragment {
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            MainActivity.name.setText("Charge Booster");
+        } else {
+
+        }
+    }
 }

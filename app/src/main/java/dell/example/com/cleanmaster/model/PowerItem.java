@@ -1,4 +1,4 @@
-package dell.example.com.cleanmaster.app;
+package dell.example.com.cleanmaster.model;
 
 public class PowerItem {
     String text;

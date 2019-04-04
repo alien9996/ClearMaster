@@ -63,7 +63,7 @@ public class MainActivity extends FragmentActivity {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(4);
 
-        //        viewPager.setCurrentItem(4)
+                viewPager.setCurrentItem(1);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 

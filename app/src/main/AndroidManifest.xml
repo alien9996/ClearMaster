@@ -35,6 +35,11 @@
         <activity
             android:name=".uis.activity.PowerSavingComplition"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".uis.activity.PowerSavingPopup"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".uis.activity.UltraPopup"
             android:screenOrientation="portrait" />

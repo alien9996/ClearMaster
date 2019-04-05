@@ -159,7 +159,7 @@ public class NomalMode extends BaseActivity {
                 editor.putString("mode", "0");
                 editor.commit();
 
-            }
+        }
         }).build());
 
     }

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -298,6 +299,7 @@ public class BatterySaver extends BaseFragment {
                 int min_u = ran.nextInt(35) + 25;
                 houru.setText(hour_u + "");
                 minutesu.setText(min_u + "");
+
 
                 if (sharedpreferences.getString("mode", "0").equals("0")) {
                     hourmain.setText(20 + "");

@@ -65,6 +65,11 @@ public class BatterySaver extends BaseFragment {
                     hourmain.setText(hour_p + "");
                     minutemain.setText(min_p + "");
                 }
+
+                if (sharedpreferences.getString("mode", "0").equals("2")) {
+                    hourmain.setText(hour_u + "");
+                    minutemain.setText(min_u + "");
+                }
             }
 
             if (level > 5 && level <= 10) {
@@ -91,6 +96,11 @@ public class BatterySaver extends BaseFragment {
                 if (sharedpreferences.getString("mode", "0").equals("1")) {
                     hourmain.setText(hour_p + "");
                     minutemain.setText(min_p + "");
+                }
+
+                if (sharedpreferences.getString("mode", "0").equals("2")) {
+                    hourmain.setText(hour_u + "");
+                    minutemain.setText(min_u + "");
                 }
             }
 
@@ -120,6 +130,11 @@ public class BatterySaver extends BaseFragment {
                     hourmain.setText(hour_p + "");
                     minutemain.setText(min_p + "");
                 }
+
+                if (sharedpreferences.getString("mode", "0").equals("2")) {
+                    hourmain.setText(hour_u + "");
+                    minutemain.setText(min_u + "");
+                }
             }
 
             if (level > 15 && level <= 25) {
@@ -146,6 +161,11 @@ public class BatterySaver extends BaseFragment {
                 if (sharedpreferences.getString("mode", "0").equals("1")) {
                     hourmain.setText(hour_p + "");
                     minutemain.setText(min_p + "");
+                }
+
+                if (sharedpreferences.getString("mode", "0").equals("2")) {
+                    hourmain.setText(hour_u + "");
+                    minutemain.setText(min_u + "");
                 }
             }
 
@@ -174,6 +194,11 @@ public class BatterySaver extends BaseFragment {
                     hourmain.setText(hour_p + "");
                     minutemain.setText(min_p + "");
                 }
+
+                if (sharedpreferences.getString("mode", "0").equals("2")) {
+                    hourmain.setText(hour_u + "");
+                    minutemain.setText(min_u + "");
+                }
             }
 
             if (level > 35 && level <= 50) {
@@ -200,6 +225,11 @@ public class BatterySaver extends BaseFragment {
                 if (sharedpreferences.getString("mode", "0").equals("1")) {
                     hourmain.setText(hour_p + "");
                     minutemain.setText(min_p + "");
+                }
+
+                if (sharedpreferences.getString("mode", "0").equals("2")) {
+                    hourmain.setText(hour_u + "");
+                    minutemain.setText(min_u + "");
                 }
             }
 
@@ -228,6 +258,11 @@ public class BatterySaver extends BaseFragment {
                     hourmain.setText(hour_p + "");
                     minutemain.setText(min_p + "");
                 }
+
+                if (sharedpreferences.getString("mode", "0").equals("2")) {
+                    hourmain.setText(hour_u + "");
+                    minutemain.setText(min_u + "");
+                }
             }
 
             if (level > 65 && level <= 75) {
@@ -254,6 +289,11 @@ public class BatterySaver extends BaseFragment {
                 if (sharedpreferences.getString("mode", "0").equals("1")) {
                     hourmain.setText(hour_p + "");
                     minutemain.setText(min_p + "");
+                }
+
+                if (sharedpreferences.getString("mode", "0").equals("2")) {
+                    hourmain.setText(hour_u + "");
+                    minutemain.setText(min_u + "");
                 }
             }
 
@@ -282,6 +322,11 @@ public class BatterySaver extends BaseFragment {
                     hourmain.setText(hour_p + "");
                     minutemain.setText(min_p + "");
                 }
+
+                if (sharedpreferences.getString("mode", "0").equals("2")) {
+                    hourmain.setText(hour_u + "");
+                    minutemain.setText(min_u + "");
+                }
             }
 
             if (level > 85 && level <= 100) {
@@ -309,6 +354,11 @@ public class BatterySaver extends BaseFragment {
                 if (sharedpreferences.getString("mode", "0").equals("1")) {
                     hourmain.setText(hour_p + "");
                     minutemain.setText(min_p + "");
+                }
+
+                if (sharedpreferences.getString("mode", "0").equals("2")) {
+                    hourmain.setText(hour_u + "");
+                    minutemain.setText(min_u + "");
                 }
             }
 

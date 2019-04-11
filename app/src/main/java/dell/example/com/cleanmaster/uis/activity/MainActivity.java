@@ -17,8 +17,8 @@ import dell.example.com.cleanmaster.adapter.PagerAdapter.MyPageAdapter;
 public class MainActivity extends FragmentActivity {
 
     public static TextView name;
-    SharedPreferences sharedpreferences;
-    SharedPreferences.Editor editor;
+    SharedPreferences sharedpreferences, sharedPreferences1;
+    SharedPreferences.Editor editor, editor1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +48,11 @@ public class MainActivity extends FragmentActivity {
         sharedpreferences = getSharedPreferences("waseembest", Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
 
+        //
+        sharedPreferences1 = getSharedPreferences("was", Context.MODE_PRIVATE);
+        editor1 = sharedPreferences1.edit();
+        editor1.putString("mode", "0");
+        editor1.commit();
 
 
         // create tab layout

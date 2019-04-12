@@ -48,7 +48,7 @@ public class MainActivity extends FragmentActivity {
         sharedpreferences = getSharedPreferences("waseembest", Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
 
-        //
+        // set sharePreferences "was" to String mode = 0
         sharedPreferences1 = getSharedPreferences("was", Context.MODE_PRIVATE);
         editor1 = sharedPreferences1.edit();
         editor1.putString("mode", "0");
@@ -68,7 +68,7 @@ public class MainActivity extends FragmentActivity {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(4);
 
-                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(2);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 

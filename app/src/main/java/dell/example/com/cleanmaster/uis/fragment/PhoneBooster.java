@@ -167,20 +167,7 @@ public class PhoneBooster extends BaseFragment {
 
                     } else {
                         // show alert to screen
-
-                        LayoutInflater inflater = getLayoutInflater(getArguments());
-                        View layout = inflater.inflate(R.layout.my_toast, null);
-
-                        //ImageView image = layout.findViewById(R.id.image);
-
-                        TextView text = layout.findViewById(R.id.textView1);
-                        text.setText("Phone is Aleady Optimized");
-
-                        Toast toast = new Toast(getActivity());
-                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 70);
-                        toast.setDuration(Toast.LENGTH_LONG);
-                        toast.setView(layout);
-                        toast.show();
+                        showCustomToast("Phone is Aleady Optimized");
                     }
                 }
             });

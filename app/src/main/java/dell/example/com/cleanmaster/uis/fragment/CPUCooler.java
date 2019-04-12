@@ -46,6 +46,7 @@ public class CPUCooler extends BaseFragment {
     RecyclerView recyclerView;
     RecyclerAdapter mAdapter;
     public static List<Apps> apps;
+    public  static String tempcpuend;
     List<Apps> apps2;
     int check = 0;
 
@@ -94,7 +95,8 @@ public class CPUCooler extends BaseFragment {
                                             NumberFormat.getNumberInstance(locale);
                                     twoDecimalForm.applyPattern("##.#°C");
 
-                                    batterytemp.setText(twoDecimalForm.format(temp - 3.3));
+                                    tempcpuend = twoDecimalForm.format(temp - 3.3);
+                                    batterytemp.setText(tempcpuend);
                                     recyclerView.setAdapter(null);
 
                                 }
@@ -103,19 +105,7 @@ public class CPUCooler extends BaseFragment {
                             coolbutton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    LayoutInflater inflater = getLayoutInflater(getArguments());
-                                    View layout = inflater.inflate(R.layout.my_toast, null);
-
-                                    ImageView image = (ImageView) layout.findViewById(R.id.image);
-
-                                    TextView text = (TextView) layout.findViewById(R.id.textView1);
-                                    text.setText("CPU Temperature is Already Normal.");
-
-                                    Toast toast = new Toast(getActivity());
-                                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 70);
-                                    toast.setDuration(Toast.LENGTH_LONG);
-                                    toast.setView(layout);
-                                    toast.show();
+                                    showCustomToast("CPU Temperature is Already Normal.");
                                 }
                             });
                         }
@@ -180,19 +170,7 @@ public class CPUCooler extends BaseFragment {
             coolbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    LayoutInflater inflater = getLayoutInflater(getArguments());
-                    View layout = inflater.inflate(R.layout.my_toast, null);
-
-                    ImageView image = (ImageView) layout.findViewById(R.id.image);
-
-                    TextView text = (TextView) layout.findViewById(R.id.textView1);
-                    text.setText("CPU Temperature is Already Normal.");
-
-                    Toast toast = new Toast(getActivity());
-                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 70);
-                    toast.setDuration(Toast.LENGTH_LONG);
-                    toast.setView(layout);
-                    toast.show();
+                    showCustomToast("CPU Temperature is Already Normal.");
                 }
             });
 

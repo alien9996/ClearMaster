@@ -24,101 +24,22 @@ import dell.example.com.cleanmaster.uis.activity.ScaningJunk;
 
 public class JunkCleaner extends BaseFragment {
 
-    ImageView mainbrush, cache, temp, residue, system;
-    TextView maintext, cachetext, temptext, residuetext, systemtext;
+    public static ImageView mainbrush, cache, temp, residue, system;
+    public static TextView maintext, cachetext, temptext, residuetext, systemtext;
     public static ImageView mainbutton;
 
     int checkvar = 0;
-    int alljunk;
+    public static int alljunk;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-
-                sharedPreferences = getActivity().getSharedPreferences("waseem", Context.MODE_PRIVATE);
-
-                if (sharedPreferences.getString("junk", "1").equals("1")) {
-
-                    mainbrush.setImageResource(R.drawable.junk_red);
-                    mainbutton.setImageResource(R.drawable.clean);
-                    cache.setImageResource(R.drawable.cache);
-                    temp.setImageResource(R.drawable.temp);
-                    residue.setImageResource(R.drawable.res);
-                    system.setImageResource(R.drawable.sys);
-
-                    Random random = new Random();
-
-                    final int proc1 = random.nextInt(20) + 5;
-                    final int proc2 = random.nextInt(15) + 10;
-                    final int proc3 = random.nextInt(30) + 15;
-                    final int proc4 = random.nextInt(25) + 10;
-
-                    alljunk = proc1 + proc2 + proc3 + proc4;
-
-                    maintext.setText(alljunk + " MB");
-                    maintext.setTextColor(Color.parseColor("#F22938"));
-
-                    cachetext.setText(proc1 + " MB");
-                    cachetext.setTextColor(Color.parseColor("#F22938"));
-
-                    temptext.setText(proc2 + " MB");
-                    temptext.setTextColor(Color.parseColor("#F22938"));
-
-                    residuetext.setText(proc3 + " MB");
-                    residuetext.setTextColor(Color.parseColor("#F22938"));
-
-                    systemtext.setText(proc4 + " MB");
-                    systemtext.setTextColor(Color.parseColor("#F22938"));
-
-                } else {
-                    isJunkCleaned();
-                }
-
-
-            } catch (Exception ex) {
-                Log.e("ERR JunkCleaner", ex.getMessage());
-            }
-
-            mainbutton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (sharedPreferences.getString("junk", "1").equals("1")) {
-                        final Intent intent = new Intent(getActivity(), ScaningJunk.class);
-                        intent.putExtra("junk", alljunk + "");
-                        startActivity(intent);
-
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                isJunkCleaned();
-
-                                editor = sharedPreferences.edit();
-                                editor.putString("junk", "0");
-                                editor.commit();
-
-                                // set pending intent for Alaram
-                                Intent intent1 = new Intent(getActivity(), AlaramJunk.class);
-
-                                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0,
-                                        intent1, PendingIntent.FLAG_ONE_SHOT);
-
-                                AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-                                alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (600 * 1000), pendingIntent);
-
-                            }
-                        }, 2000);
-                    } else {
-                        showCustomToast("No Junk Files ALready Cleaned");
-                    }
-                }
-            });
-        }
-    };
+//    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//
+//        }
+//    };
 
     @Override
     protected int injectLayout() {
@@ -141,8 +62,88 @@ public class JunkCleaner extends BaseFragment {
         systemtext = view_home.findViewById(R.id.systemtext);
         mainbutton = view_home.findViewById(R.id.mainbutton);
 
-        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+//        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
+        try {
+
+            sharedPreferences = getActivity().getSharedPreferences("waseem", Context.MODE_PRIVATE);
+
+            if (sharedPreferences.getString("junk", "1").equals("1")) {
+
+                mainbrush.setImageResource(R.drawable.junk_red);
+                mainbutton.setImageResource(R.drawable.clean);
+                cache.setImageResource(R.drawable.cache);
+                temp.setImageResource(R.drawable.temp);
+                residue.setImageResource(R.drawable.res);
+                system.setImageResource(R.drawable.sys);
+
+                Random random = new Random();
+
+                final int proc1 = random.nextInt(20) + 5;
+                final int proc2 = random.nextInt(15) + 10;
+                final int proc3 = random.nextInt(30) + 15;
+                final int proc4 = random.nextInt(25) + 10;
+
+                alljunk = proc1 + proc2 + proc3 + proc4;
+
+                maintext.setText(alljunk + " MB");
+                maintext.setTextColor(Color.parseColor("#F22938"));
+
+                cachetext.setText(proc1 + " MB");
+                cachetext.setTextColor(Color.parseColor("#F22938"));
+
+                temptext.setText(proc2 + " MB");
+                temptext.setTextColor(Color.parseColor("#F22938"));
+
+                residuetext.setText(proc3 + " MB");
+                residuetext.setTextColor(Color.parseColor("#F22938"));
+
+                systemtext.setText(proc4 + " MB");
+                systemtext.setTextColor(Color.parseColor("#F22938"));
+
+            } else {
+                isJunkCleaned();
+            }
+
+
+        } catch (Exception ex) {
+            Log.e("ERR JunkCleaner", ex.getMessage());
+        }
+
+        mainbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sharedPreferences.getString("junk", "1").equals("1")) {
+                    final Intent intent = new Intent(getActivity(), ScaningJunk.class);
+                    intent.putExtra("junk", alljunk + "");
+                    startActivity(intent);
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            isJunkCleaned();
+
+                            editor = sharedPreferences.edit();
+                            editor.putString("junk", "0");
+                            editor.commit();
+
+                            // set pending intent for Alaram
+                            Intent intent1 = new Intent(getActivity(), AlaramJunk.class);
+
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 0,
+                                    intent1, PendingIntent.FLAG_ONE_SHOT);
+
+                            AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                            alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000 * 2000), pendingIntent);
+
+                        }
+                    }, 2000);
+                } else {
+                    showCustomToast("No Junk Files ALready Cleaned");
+                }
+            }
+        });
     }
 
 

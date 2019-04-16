@@ -37,7 +37,12 @@ public class JunkAppAdapter extends  RecyclerView.Adapter<JunkAppAdapter.MyViewH
 
     @Override
     public int getItemCount() {
-        return apps.size();
+        if(apps != null) {
+            return apps.size();
+        } else {
+            return 0;
+        }
+
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

@@ -56,7 +56,7 @@ public class CPUCooler extends BaseFragment {
         public void onReceive(Context context, final Intent intent) {
             try {
                 // get *C of CPU
-                int level = intent.getIntExtra("level", 0);
+               // int level = intent.getIntExtra("level", 0);
                 temp = ((float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0)) / 10;
 
                 batterytemp.setText(temp + "°C");
@@ -178,7 +178,7 @@ public class CPUCooler extends BaseFragment {
 
 
         } catch (Exception ex) {
-            Log.e("MAIM CPUCooler", ex.getMessage());
+            Log.e("MAIN CPUCooler", ex.getMessage());
         }
 
     }
@@ -195,9 +195,8 @@ public class CPUCooler extends BaseFragment {
 
                 if (!packageName.equals("dell.example.com.cleanmaster")) {
 
-                    Drawable icon = null;
                     try {
-                        String pName = (String) pm.getApplicationLabel(pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA));
+                        //String pName = (String) pm.getApplicationLabel(pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA));
                         Apps app = new Apps();
 
                         File file = new File(pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA).publicSourceDir);
@@ -206,7 +205,7 @@ public class CPUCooler extends BaseFragment {
                         app.setSize(size / 1000000 + 20 + "MB");
 
                         ApplicationInfo a = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-                        app.setImage(icon = getActivity().getPackageManager().getApplicationIcon(packages.get(k).packageName));
+                        app.setImage(getActivity().getPackageManager().getApplicationIcon(packages.get(k).packageName));
                         getActivity().getPackageManager();
 
                         if (((a.flags & ApplicationInfo.FLAG_SYSTEM) == 0)) {

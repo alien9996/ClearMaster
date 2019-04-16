@@ -29,7 +29,6 @@ public class BatterySaver extends BaseFragment {
     ImageView powersaving, ultrasaving, normal;
     TextView hourn, minutes, hourp, minutep, houru, minutesu, hourmain, minutemain;
     SharedPreferences sharedpreferences;
-    SharedPreferences.Editor editor;
 
     private BroadcastReceiver mBatInfoReceiver = new BroadcastReceiver() {
         @Override

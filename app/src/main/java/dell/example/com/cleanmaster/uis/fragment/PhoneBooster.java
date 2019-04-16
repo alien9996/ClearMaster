@@ -56,7 +56,6 @@ public class PhoneBooster extends BaseFragment {
     public static ImageView optimizebutton;
 
     TimerTask timer = null;
-    TimerTask timer2 = null;
     int counter = 0;
     int x, y;
     int used_memory_size = 0;
@@ -219,10 +218,6 @@ public class PhoneBooster extends BaseFragment {
         );
 
         // Create data series track
-        SeriesItem seriesItem1 = new SeriesItem.Builder(Color.parseColor("#F22938"))
-                .setRange(0, 100, 0)
-                .setLineWidth(32f)
-                .build();
 
         SeriesItem seriesItem2 = new SeriesItem.Builder(Color.parseColor("#2499E0"))
                 .setRange(0, 100, 0)
@@ -264,40 +259,6 @@ public class PhoneBooster extends BaseFragment {
                             centree.setText(sharedpreferences.getString("value", "50 MB"));
                         }
 
-//                        final Timer t = new Timer();
-//                        final Timer t2 = new Timer();
-//
-//                        try {
-//
-//                            timer2 = new TimerTask() {
-//                                @Override
-//                                public void run() {
-//                                    try {
-//
-//                                        getActivity().runOnUiThread(new Runnable() {
-//                                            @Override
-//                                            public void run() {
-//                                                centree.setText(getUsedMemorySize() + " MB");
-//
-//                                                if (sharedpreferences.getString("booster", "1").equals("0")) {
-//                                                    centree.setText(sharedpreferences.getString("value", "50 MB"));
-//                                                }
-//
-//                                                t2.cancel();
-//                                                timer2.cancel();
-//                                                t2.purge();
-//                                            }
-//                                        });
-//                                    } catch (Exception ex) {
-//                                        Log.e("TIMER2 ERR", "" + ex);
-//                                    }
-//                                }
-//                            };
-//
-//                        } catch (Exception ex) {
-//                            Log.e("T2 ERR", "" + ex);
-//                        }
-
                     }
                 }).build());
 
@@ -338,8 +299,6 @@ public class PhoneBooster extends BaseFragment {
                     ImageView image = view_home.findViewById(R.id.circulalines);
 
                     image.startAnimation(rotate);
-
-                    Log.e("AAA", "BB");
                 }
             });
 
@@ -412,7 +371,6 @@ public class PhoneBooster extends BaseFragment {
 
             img_animation.startAnimation(animation);
 
-            int counter = 0;
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
@@ -490,7 +448,7 @@ public class PhoneBooster extends BaseFragment {
                 render = new RandomAccessFile("/proc/meminfo", "r");
                 load = render.readLine();
             } catch (Exception ex) {
-                Log.e("A", "" + ex);
+                Log.e("ERR getTotalRam", "" + ex);
             }
 
             // get the number values from the string
@@ -504,7 +462,7 @@ public class PhoneBooster extends BaseFragment {
             try {
                 render.close();
             } catch (Exception ex) {
-                Log.e("B", "" + ex);
+                Log.e("ERR Close render", "" + ex);
             }
 
             totRam = Double.parseDouble(value);

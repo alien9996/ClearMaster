@@ -4,8 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dell.example.com.cleanmaster.R;
-import dell.example.com.cleanmaster.adapter.RecyclerAdapter;
 import dell.example.com.cleanmaster.adapter.ScanCpuApp;
 import dell.example.com.cleanmaster.model.Apps;
 import dell.example.com.cleanmaster.uis.BaseActivity;
@@ -43,8 +40,6 @@ public class CpuScaner extends BaseActivity {
     ScanCpuApp mAdapter;
     RecyclerView recyclerView;
     List<Apps> apps = null;
-    PackageManager pm;
-    List<ApplicationInfo> packages;
     TextView cooledcpu;
     RelativeLayout rel;
     InterstitialAd mInterstitialAd;
@@ -125,13 +120,13 @@ public class CpuScaner extends BaseActivity {
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
-        try{
+        try {
 
             final Handler handler1 = new Handler();
             handler1.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    add("", 0);
+                    add(0);
                 }
             }, 0);
 
@@ -140,7 +135,7 @@ public class CpuScaner extends BaseActivity {
                 @Override
                 public void run() {
                     remove(0);
-                    add("", 1);
+                    add(1);
 
 
                 }
@@ -151,7 +146,7 @@ public class CpuScaner extends BaseActivity {
                 @Override
                 public void run() {
                     remove(0);
-                    add("", 2);
+                    add(2);
 
 
                 }
@@ -162,7 +157,7 @@ public class CpuScaner extends BaseActivity {
                 @Override
                 public void run() {
                     remove(0);
-                    add("", 3);
+                    add(3);
 
 
                 }
@@ -173,7 +168,7 @@ public class CpuScaner extends BaseActivity {
                 @Override
                 public void run() {
                     remove(0);
-                    add("", 4);
+                    add(4);
                 }
             }, 3700);
 //
@@ -182,7 +177,7 @@ public class CpuScaner extends BaseActivity {
                 @Override
                 public void run() {
                     remove(0);
-                    add("", 5);
+                    add(5);
                 }
             }, 4400);
 
@@ -191,7 +186,7 @@ public class CpuScaner extends BaseActivity {
                 @Override
                 public void run() {
                     remove(0);
-                    add("", 6);
+                    add(6);
 
                     final RippleBackground rippleBackground = findViewById(R.id.content);
                     ImageView imageView = findViewById(R.id.centerImage);
@@ -224,7 +219,7 @@ public class CpuScaner extends BaseActivity {
                             rippleBackground.stopRippleAnimation();
                             mInterstitialAd.show();
 
-                            final  Handler handler = new Handler();
+                            final Handler handler = new Handler();
 
                             handler.postDelayed(new Runnable() {
                                 @Override
@@ -241,7 +236,6 @@ public class CpuScaner extends BaseActivity {
             }, 5500);
 
 
-
         } catch (Exception ex) {
             Log.e("ERR CPUScaner", ex.getMessage());
         }
@@ -249,14 +243,12 @@ public class CpuScaner extends BaseActivity {
     }
 
 
-    public void add(String text, int position) {
+    public void add(int position) {
 
         try {
 
             mAdapter.notifyItemInserted(position);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
 
         }
     }
@@ -267,9 +259,7 @@ public class CpuScaner extends BaseActivity {
         mAdapter.notifyItemRemoved(position);
         try {
             CPUCooler.apps.remove(position);
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
 
         }
     }

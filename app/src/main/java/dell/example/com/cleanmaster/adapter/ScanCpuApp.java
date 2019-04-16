@@ -1,4 +1,5 @@
 package dell.example.com.cleanmaster.adapter;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,9 @@ public class ScanCpuApp extends RecyclerView.Adapter<ScanCpuApp.MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return apps.size();
+        if (apps != null) {
+            return apps.size();
+        } else return 0;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

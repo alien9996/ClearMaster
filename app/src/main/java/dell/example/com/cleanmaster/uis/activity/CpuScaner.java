@@ -84,7 +84,6 @@ public class CpuScaner extends BaseActivity {
         rotate.setInterpolator(new LinearInterpolator());
         scanner.setAnimation(rotate);
 
-
         // set Translate Animation for img_animation
         TranslateAnimation animation = new TranslateAnimation(0.0f, 1000f, 0.0f, 0.0f);
         animation.setDuration(5500);

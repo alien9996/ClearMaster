@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -121,14 +122,14 @@ public class PhoneBooster extends BaseFragment {
 //            ramperct.setText(ran3.nextInt(60) + 40 + "%");
 
             DecimalFormat fm = new DecimalFormat("##");
-            Float totalram = Float.parseFloat(total_ram.substring(0,3));
+            Float totalram = Float.parseFloat(total_ram.substring(0, 3));
             double ram1 = 1 + 100 * (used_memory_size / 1024.0) / totalram;
             if (ram1 < 60) {
                 ram1 = ram1 + 10;
-                used_memory_size = (int)(used_memory_size + totalram * 0.1);
+                used_memory_size = (int) (used_memory_size + totalram * 0.1);
             } else {
                 ram1 = ram1 + 5;
-                used_memory_size = (int)(used_memory_size + totalram * 0.05);
+                used_memory_size = (int) (used_memory_size + totalram * 0.05);
             }
 
             String ram_str = fm.format(ram1);
@@ -143,7 +144,7 @@ public class PhoneBooster extends BaseFragment {
                 optimizebutton.setImageResource(0);
                 optimizebutton.setImageResource(R.drawable.optimize);
 
-                centree.setText(sharedpreferences.getString("value", "50 MB"));
+                centree.setText(sharedpreferences.getString("value", "0 MB"));
             }
             start(ram_str);
 
@@ -250,7 +251,13 @@ public class PhoneBooster extends BaseFragment {
                         timer.cancel();
                         t.purge();
 
-                        centree.setText(used_memory_size + " MB");
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                centree.setText(used_memory_size + " MB");
+                            }
+                        }, 50);
 
 
                         if (sharedpreferences.getString("booster", "1").equals("0")) {
@@ -317,18 +324,25 @@ public class PhoneBooster extends BaseFragment {
             final int memory_size = used_memory_size - x;
 
             DecimalFormat fm = new DecimalFormat("##");
-            Float totalram1 = Float.parseFloat(total_ram.substring(0,3));
+            Float totalram1 = Float.parseFloat(total_ram.substring(0, 3));
             double percen = 1 + 100 * (memory_size / 1024.0) / totalram1;
             final String ram_str = fm.format(percen);
 
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    RotateAnimation rotate = new RotateAnimation(0, 359, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    rotate.setDuration(5000);
+                    rotate.setInterpolator(new LinearInterpolator());
 
-            RotateAnimation rotate = new RotateAnimation(0, 359, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            rotate.setDuration(5000);
-            rotate.setInterpolator(new LinearInterpolator());
+                    ImageView image = view_home.findViewById(R.id.circulalines);
 
-            ImageView image = view_home.findViewById(R.id.circulalines);
+                    image.startAnimation(rotate);
 
-            image.startAnimation(rotate);
+                    Log.e("AAA", "BB");
+                }
+            });
+
 
             arcView.addSeries(new SeriesItem.Builder(Color.argb(255, 218, 218, 218))
                     .setRange(0, 100, 0)
@@ -386,7 +400,6 @@ public class PhoneBooster extends BaseFragment {
                     ramperct.setText(ram_str + "%");
                 }
             }).build());
-
 
             ImageView img_animation = view_home.findViewById(R.id.waves);
 

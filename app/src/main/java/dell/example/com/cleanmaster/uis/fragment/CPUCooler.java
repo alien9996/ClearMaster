@@ -61,7 +61,7 @@ public class CPUCooler extends BaseFragment {
 
                 batterytemp.setText(temp + "°C");
 
-                if (temp >= 22.0) {
+                if (temp >= 24.0) {
 
                     apps = new ArrayList<>();
                     apps2 = new ArrayList<>();
@@ -182,7 +182,6 @@ public class CPUCooler extends BaseFragment {
         }
 
     }
-
 
     public void getAllIcons() {
 

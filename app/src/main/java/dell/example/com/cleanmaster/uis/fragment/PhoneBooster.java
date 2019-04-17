@@ -54,6 +54,7 @@ public class PhoneBooster extends BaseFragment {
             processes, top, bottom, ramperct;
     LinearLayout scanlay, optimizelay;
     public static ImageView optimizebutton;
+    ImageView img_animation;
 
     TimerTask timer = null;
     int counter = 0;
@@ -96,6 +97,14 @@ public class PhoneBooster extends BaseFragment {
 
         // ImageView
         optimizebutton = view_home.findViewById(R.id.optbutton);
+        img_animation = view_home.findViewById(R.id.waves);
+
+//        getActivity().runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                img_animation.setImageResource(R.drawable.running_bar);
+//            }
+//        });
 
         //  Create sharedPreferences
         sharedpreferences = getActivity().getSharedPreferences("waseem", Context.MODE_PRIVATE);
@@ -360,56 +369,60 @@ public class PhoneBooster extends BaseFragment {
                 }
             }).build());
 
-            ImageView img_animation = view_home.findViewById(R.id.waves);
-
-            TranslateAnimation animation = new TranslateAnimation(0, 1000, 0.0f, 0.0f);
-            animation.setDuration(5000);
-            animation.setRepeatCount(0);
-            animation.setInterpolator(new LinearInterpolator());
-            //        animation.setRepeatMode(2);   // repeat animation (left to right, right to left )
-            animation.setFillAfter(true);
-
-            img_animation.startAnimation(animation);
-
-            animation.setAnimationListener(new Animation.AnimationListener() {
+            getActivity().runOnUiThread(new Runnable() {
                 @Override
-                public void onAnimationStart(Animation animation) {
-                    scanlay.setVisibility(View.VISIBLE);
-                    optimizelay.setVisibility(View.GONE);
-                    scanning.setText("SCANNING...");
-                }
+                public void run() {
+                    TranslateAnimation animation = new TranslateAnimation(0, 600, 0.0f, 0.0f);
+                    animation.setDuration(5000);
+                    animation.setRepeatCount(0);
+                    animation.setInterpolator(new LinearInterpolator());
+                    //        animation.setRepeatMode(2);   // repeat animation (left to right, right to left )
+                    animation.setFillAfter(true);
 
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    scanlay.setVisibility(View.GONE);
-                    optimizelay.setVisibility(View.VISIBLE);
+                    img_animation.startAnimation(animation);
 
-                    optimizebutton.setImageResource(R.drawable.optimized);
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            scanlay.setVisibility(View.VISIBLE);
+                            optimizelay.setVisibility(View.GONE);
+                            scanning.setText("SCANNING...");
+                        }
 
-                    Random ran2 = new Random();
-                    int proc = ran2.nextInt(10) + 5;
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            scanlay.setVisibility(View.GONE);
+                            optimizelay.setVisibility(View.VISIBLE);
 
-                    centree.setText(memory_size + " MB");
+                            optimizebutton.setImageResource(R.drawable.optimized);
 
-                    editor = sharedpreferences.edit();
-                    editor.putString("values", memory_size + " MB");
-                    editor.commit();
+                            Random ran2 = new Random();
+                            int proc = ran2.nextInt(10) + 5;
 
-                    totalram.setText(total_ram);
-                    usedram.setText(memory_size + " MB/ ");
+                            centree.setText(memory_size + " MB");
 
-                    appsfreed.setText(total_ram);
-                    appsused.setText(Math.abs(memory_size - 33) + " MB/ ");
+                            editor = sharedpreferences.edit();
+                            editor.putString("values", memory_size + " MB");
+                            editor.commit();
 
-                    processes.setText(y - proc + "");
+                            totalram.setText(total_ram);
+                            usedram.setText(memory_size + " MB/ ");
 
-                }
+                            appsfreed.setText(total_ram);
+                            appsused.setText(Math.abs(memory_size - 33) + " MB/ ");
 
-                @Override
-                public void onAnimationRepeat(Animation animation) {
+                            processes.setText(y - proc + "");
 
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
                 }
             });
+
         } catch (Exception ex) {
             Log.e("OPTIMIZE", "" + ex);
         }

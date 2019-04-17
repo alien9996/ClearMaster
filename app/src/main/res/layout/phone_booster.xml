@@ -29,9 +29,9 @@
                 android:id="@+id/waves"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="-700dp"
+                android:layout_marginLeft="-300dp"
                 android:paddingTop="@dimen/_20sdp"
-                android:src="@drawable/running_bar" />
+                android:src="@drawable/running_bar1"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

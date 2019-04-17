@@ -88,9 +88,9 @@
             android:id="@+id/heart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="-700dp"
+            android:layout_marginLeft="-300dp"
             android:paddingBottom="@dimen/_15sdp"
-            android:src="@drawable/heartbeat" />
+            android:src="@drawable/heartbeat1" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"

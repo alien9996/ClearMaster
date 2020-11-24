@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import dell.example.com.cleanmaster.uis.fragment.BatterySaver;
 import dell.example.com.cleanmaster.uis.fragment.CPUCooler;
 import dell.example.com.cleanmaster.uis.fragment.JunkCleaner;
+import dell.example.com.cleanmaster.uis.fragment.ListenerSetting;
 import dell.example.com.cleanmaster.uis.fragment.PhoneBooster;
 
 public class MyPageAdapter extends FragmentStatePagerAdapter {
@@ -34,6 +35,9 @@ public class MyPageAdapter extends FragmentStatePagerAdapter {
             case 3:
                 JunkCleaner junkCleaner = new JunkCleaner();
                 return junkCleaner;
+            case 4:
+                ListenerSetting listenerSetting = new ListenerSetting();
+                return listenerSetting;
 
             default:
                 return null;

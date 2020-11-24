@@ -2,4 +2,7 @@
     <string name="app_name">CleanMaster</string>
     <string name="action_settings">Settings</string>
     <string name="interstitial">B4887AE48DD7CDEE9FFA070FC8415149</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

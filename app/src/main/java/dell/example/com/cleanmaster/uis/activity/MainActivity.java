@@ -56,11 +56,12 @@ public class MainActivity extends FragmentActivity {
 
 
         // create tab layout
-        final TabLayout  tabLayout = findViewById(R.id.tab_layout);
+        final TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.phonebooster));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.battery_saver));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.cooler));
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.cleaner));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.icons_settings));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = findViewById(R.id.pager);
@@ -68,7 +69,7 @@ public class MainActivity extends FragmentActivity {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(4);
 
-         // viewPager.setCurrentItem(3);
+        // viewPager.setCurrentItem(3);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -98,6 +99,7 @@ public class MainActivity extends FragmentActivity {
         editor.putString("button2", "0");
         editor.putString("button3", "0");
         editor.putString("button4", "0");
+        editor.putString("button5", "0");
         editor.commit();
     }
 }
